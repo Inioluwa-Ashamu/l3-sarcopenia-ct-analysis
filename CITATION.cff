@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use or discuss this project, please cite the dissertation project."
-title: "Automated Tool to Detect Sarcopenia from CT Scans"
+title: "L3 Sarcopenia CT Analysis"
 authors:
   - family-names: "Ashamu"
     given-names: "Inioluwa Isaac"
 year: 2025
 type: software
-repository-code: "https://github.com/Inioluwa-Ashamu/Automated-Tool-To-Detect-Sarcopenia"
+repository-code: "https://github.com/Inioluwa-Ashamu/l3-sarcopenia-ct-analysis"
 abstract: "Research prototype for L3 skeletal muscle segmentation and sarcopenia-related body-composition measurements from CT imaging."
 keywords:
   - sarcopenia

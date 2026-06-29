@@ -481,7 +481,7 @@ def sidebar_configuration() -> Dict[str, Any]:
 
 
 def topbar_header():
-    st.title("Automated Tool to Detect Sarcopenia (ATTDS) - Research Viewer")
+    st.title("L3 Sarcopenia CT Analysis - Research Viewer")
     st.caption(
         "Select a patient to view the recorded L3 slice, overlay Manual/DL/TS masks, and compute CSA/SMRA. "
         "If height is provided, SMI and classification are included."

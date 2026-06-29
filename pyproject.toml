@@ -1,5 +1,5 @@
 [project]
-name = "automated-tool-to-detect-sarcopenia"
+name = "l3-sarcopenia-ct-analysis"
 version = "0.1.0"
 description = "Research prototype for L3 sarcopenia analysis from CT imaging."
 readme = "README.md"

@@ -1,4 +1,4 @@
-# Automated Tool to Detect Sarcopenia from CT Imaging
+# L3 Sarcopenia CT Analysis
 
 Research prototype for automated L3 skeletal muscle analysis from abdominal CT scans. This MSc project converts CT DICOM series into analysis-ready volumes, identifies the L3 slice, compares manual and automated muscle masks, calculates body-composition metrics, and provides a Streamlit review interface.
 
@@ -79,8 +79,8 @@ DICOM CT series
 ## Installation
 
 ```bash
-git clone https://github.com/Inioluwa-Ashamu/Automated-Tool-To-Detect-Sarcopenia.git
-cd Automated-Tool-To-Detect-Sarcopenia
+git clone https://github.com/Inioluwa-Ashamu/l3-sarcopenia-ct-analysis.git
+cd l3-sarcopenia-ct-analysis
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
