@@ -10,6 +10,7 @@ venv/
 # Local configuration
 .env
 *.local
+PORTFOLIO_PROJECT_REVIEW.md
 
 # Medical imaging data and derived patient artefacts
 *.dcm
