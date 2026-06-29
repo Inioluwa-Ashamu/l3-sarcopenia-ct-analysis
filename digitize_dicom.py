@@ -8,8 +8,8 @@ import logging
 import stat
 
 # ----------------------------- Settings -----------------------------
-RAW_ROOT = r"C:\Users\sophi\Downloads\ATTDS\raw_data"
-OUTPUT_ROOT = r"C:\Users\sophi\Downloads\ATTDS\anon_dig"
+RAW_ROOT = os.environ.get("ATTDS_RAW_ROOT", "raw_data")
+OUTPUT_ROOT = os.environ.get("ATTDS_DATA_ROOT", "anon_dig")
 ANONYMIZE = True  # set to False to keep PHI
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -134,6 +134,10 @@ def save_patient_data(np_array, norm_array, sitk_image, output_path):
 
 # ----------------------------- Main Runner -----------------------------
 if __name__ == "__main__":
+    if len(os.sys.argv) >= 2 and os.sys.argv[1]:
+        RAW_ROOT = os.sys.argv[1]
+    if len(os.sys.argv) >= 3 and os.sys.argv[2]:
+        OUTPUT_ROOT = os.sys.argv[2]
     logging.info(" Starting digitization...")
 
     patient_dirs = [os.path.join(RAW_ROOT, d) for d in os.listdir(RAW_ROOT) if os.path.isdir(os.path.join(RAW_ROOT, d))]

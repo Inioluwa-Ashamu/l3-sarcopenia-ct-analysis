@@ -13,8 +13,8 @@ import subprocess
 from datetime import datetime
 
 # ----------------------- CONFIG (edit as needed) -----------------------
-DIGITIZED_ROOT = r"C:\Users\sophi\Downloads\ATTDS\anon_dig"        # where patientXXX folders live
-TS_EXE         = r"C:\Users\sophi\anaconda3\Scripts\TotalSegmentator.exe"          # or r"C:\Path\To\TotalSegmentator.exe"
+DIGITIZED_ROOT = os.environ.get("ATTDS_DATA_ROOT", "anon_dig")        # where patientXXX folders live
+TS_EXE         = os.environ.get("ATTDS_TS_EXE", "TotalSegmentator")
 TIMEOUT_SEC    = 36000                         # per-case timeout
 LOG_LEVEL      = "INFO"
 
@@ -215,7 +215,7 @@ def main():
 
 if __name__ == "__main__":
     # Allow overriding TS_EXE or ROOT via CLI (optional)
-    # Example: python run_all_segmentation.py "C:\Full\Path\TotalSegmentator.exe" "E:\ATTDS\anon_dig"
+    # Example: python run_all_segmentation.py "TotalSegmentator" "anon_dig"
     if len(sys.argv) >= 2 and sys.argv[1]:
         TS_EXE = sys.argv[1]
     if len(sys.argv) >= 3 and sys.argv[2]:

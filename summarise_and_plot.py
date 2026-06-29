@@ -1,11 +1,11 @@
 # dl/summarise_and_plot.py
-import csv, math, numpy as np
+import csv, math, os, numpy as np
 from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig")
+ROOT = Path(os.environ.get("ATTDS_DATA_ROOT", "anon_dig"))
 RUNS = ROOT / "dl_runs"
 CMP  = RUNS / "comparison_all.csv"           # Manual/DL/TS CSA & SMRA
 DICE = RUNS / "eval_dice_manual_vs_DL.csv"   # DL vs Manual Dice
@@ -84,9 +84,9 @@ with open(SUMT, "w", encoding="utf-8") as fh:
     fh.write(f"N valid rows (comparison_all.csv): {len(rows)}\n")
     fh.write(f"N manual cases (CSA_manual present): {len(cma_m)}\n")
     fh.write(f"N Dice (DL vs Manual): {nd}\n\n")
-    fh.write(f"Dice (DL vs Manual): median={md:.3f}  IQR={q1d:.3f}â€“{q3d:.3f}\n")
-    fh.write(f"CSA diff (DL - Manual) [cm^2]: median={mdl:.2f}  IQR={q1l:.2f}â€“{q3l:.2f}  (N={nl})\n")
-    fh.write(f"CSA diff (TS - Manual) [cm^2]: median={mts:.2f}  IQR={q1t:.2f}â€“{q3t:.2f}  (N={nt})\n")
+    fh.write(f"Dice (DL vs Manual): median={md:.3f}  IQR={q1d:.3f}-{q3d:.3f}\n")
+    fh.write(f"CSA diff (DL - Manual) [cm2]: median={mdl:.2f}  IQR={q1l:.2f}-{q3l:.2f}  (N={nl})\n")
+    fh.write(f"CSA diff (TS - Manual) [cm2]: median={mts:.2f}  IQR={q1t:.2f}-{q3t:.2f}  (N={nt})\n")
 
 print("Wrote", SUMT)
 
@@ -95,7 +95,7 @@ print("Wrote", SUMT)
 plt.figure()
 plt.hist(cma_m[~np.isnan(cma_m)], bins=15, alpha=0.6, label="Manual")
 plt.hist(cdl_m[~np.isnan(cdl_m)], bins=15, alpha=0.6, label="DL")
-plt.xlabel("L3 Skeletal Muscle CSA (cmÂ²)"); plt.ylabel("Count"); plt.legend()
+plt.xlabel("L3 Skeletal Muscle CSA (cm2)"); plt.ylabel("Count"); plt.legend()
 plt.title("CSA at L3: Manual vs DL"); plt.savefig(OUTD/"hist_csa_manual_vs_dl.png", bbox_inches="tight"); plt.close()
 
 # 2) Scatter DL vs Manual
@@ -107,7 +107,7 @@ if x.size and y.size:
     lo, hi = float(min(x.min(), y.min())), float(max(x.max(), y.max()))
     pad = (hi-lo)*0.05
     plt.plot([lo-pad, hi+pad], [lo-pad, hi+pad], '--')
-plt.xlabel("CSA Manual (cmÂ²)"); plt.ylabel("CSA DL (cmÂ²)")
+plt.xlabel("CSA Manual (cm2)"); plt.ylabel("CSA DL (cm2)")
 plt.title("Agreement: DL vs Manual"); plt.savefig(OUTD/"scatter_csa_dl_vs_manual.png", bbox_inches="tight"); plt.close()
 
 # 3) Dice boxplot

@@ -6,14 +6,14 @@ import matplotlib.pyplot as plt
 
 # ---------- CONFIG ----------
 # Point these at your folders
-L3_SLICES_DIR   = r"E:\ATTDS\annotations\nii_for_snap"           # patientXXX_L3slice.nii(.gz)
-MANUAL_MASKS_DIR= r"E:\ATTDS\masks"        # patientXXX*.nii(.gz)
+L3_SLICES_DIR   = os.environ.get("ATTDS_L3_SLICES_DIR", "annotations/nii_for_snap")
+MANUAL_MASKS_DIR= os.environ.get("ATTDS_MANUAL_DIR", "masks")
 
 # OPTIONAL: add more mask sources for comparison contours
-TS_MASKS_DIR    = None  # e.g., r"E:\ATTDS\anon_dig\patientXXX\segmentations2_tissue\skeletal_muscle.nii.gz"
-DL_MASKS_DIR    = None  # e.g., r"E:\ATTDS\anon_dig\dl_preds"
+TS_MASKS_DIR    = None  # e.g., "anon_dig/patientXXX/segmentations2_tissue/skeletal_muscle.nii.gz"
+DL_MASKS_DIR    = None  # e.g., "anon_dig/dl_preds"
 
-OUT_DIR         = r"E:\ATTDS\overlays_contour"
+OUT_DIR         = os.environ.get("ATTDS_OVERLAY_DIR", "overlays_contour")
 
 # Filename patterns (glob). We'll match by patientXXX in the name.
 SLICE_PATS = ["*L3slice*.nii*", "*.nii", "*.nii.gz"]
@@ -50,7 +50,7 @@ def read_nii_2d(path):
     return arr, img
 
 def resample_mask_to_shape(mask_arr, target_shape):
-    if mask_arr.shape == target_shape: 
+    if mask_arr.shape == target_shape:
         return (mask_arr > 0).astype(np.uint8)
     m_itk = sitk.GetImageFromArray((mask_arr>0).astype(np.uint8))
     ref = sitk.Image(target_shape[1], target_shape[0], sitk.sitkUInt8)

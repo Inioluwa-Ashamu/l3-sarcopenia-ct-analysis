@@ -11,7 +11,7 @@ import SimpleITK as sitk
 import matplotlib.pyplot as plt
 
 # --------- CONFIG (edit if paths differ) ----------
-ROOT = r"C:\Users\sophi\Downloads\ATTDS\anon_dig"        # same root used in run_all_segmentation.py
+ROOT = os.environ.get("ATTDS_DATA_ROOT", "anon_dig")        # same root used in run_all_segmentation.py
 L3_DIRNAME = "segmentations2_L3"
 MASK_NAME = "vertebrae_L3.nii.gz"
 LOG_LEVEL = "INFO"
@@ -90,17 +90,17 @@ def process_patient(patient_id, patient_dir):
     ct_path = os.path.join(patient_dir, "original.nii.gz")
     l3_mask_path = os.path.join(patient_dir, L3_DIRNAME, MASK_NAME)
     if not os.path.exists(ct_path):
-        logging.warning("%s: missing original.nii.gz â€” skip", patient_id)
+        logging.warning("%s: missing original.nii.gz - skip", patient_id)
         return
     if not os.path.exists(l3_mask_path):
-        logging.warning("%s: missing %s â€” skip", patient_id, l3_mask_path)
+        logging.warning("%s: missing %s - skip", patient_id, l3_mask_path)
         return
 
     # derive L3 index from mask
     mask_arr, _ = read_mask(l3_mask_path)
     z = find_max_area_slice(mask_arr)
     if z is None:
-        logging.warning("%s: L3 mask has no positive voxels â€” skip", patient_id)
+        logging.warning("%s: L3 mask has no positive voxels - skip", patient_id)
         return
 
     # write/update metadata.txt

@@ -2,8 +2,9 @@ import os, random, numpy as np, torch, torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from pathlib import Path
 
-DATA = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig\dl_data\train_npz")  # match exporter
-OUT  = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig\dl_runs"); OUT.mkdir(parents=True, exist_ok=True)
+ROOT = Path(os.environ.get("ATTDS_DATA_ROOT", "anon_dig"))
+DATA = Path(os.environ.get("ATTDS_TRAIN_NPZ_DIR", str(ROOT / "dl_data" / "train_npz")))
+OUT  = Path(os.environ.get("ATTDS_RUNS_DIR", str(ROOT / "dl_runs"))); OUT.mkdir(parents=True, exist_ok=True)
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 EPOCHS = 15; BATCH = 16; LR = 1e-3
 

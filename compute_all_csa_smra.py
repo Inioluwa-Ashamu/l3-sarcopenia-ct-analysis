@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Compute L3 Skeletal Muscle CSA (cmÂ²) and SMRA (HU) for Manual, DL, and TS masks
+Compute L3 Skeletal Muscle CSA (cm2) and SMRA (HU) for Manual, DL, and TS masks
 in one pass, writing a single comparison CSV.
 
 - Finds L3_index from each patient's metadata.txt
@@ -12,7 +12,7 @@ in one pass, writing a single comparison CSV.
 - Handles shape mismatches via 2D NN resampling (masks only)
 - HU window for SMRA: [-29, 150]
 
-Output: E:\ATTDS\anon_dig\dl_runs\comparison_all.csv
+Output: <ATTDS_DATA_ROOT>/dl_runs/comparison_all.csv
 Columns:
 patient_id, L3_index, px_area_cm2,
 CSA_manual, SMRA_manual, npx_manual,
@@ -27,8 +27,8 @@ import numpy as np
 import SimpleITK as sitk
 
 # ----------------- CONFIG -----------------
-ROOT       = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig")          # dataset root
-MANUAL_DIR = Path(r"C:\Users\sophi\Downloads\ATTDS\masks")      # folder containing manual L3 masks
+ROOT       = Path(os.environ.get("ATTDS_DATA_ROOT", "anon_dig"))          # dataset root
+MANUAL_DIR = Path(os.environ.get("ATTDS_MANUAL_DIR", "masks"))      # folder containing manual L3 masks
 DL_DIR     = ROOT / "dl_preds"                    # folder with DL predicted masks
 TS_DIRNAME = "segmentations2_tissue"              # subfolder inside each patient for TS masks
 OUT_CSV    = ROOT / "dl_runs" / "comparison_all.csv"
@@ -160,7 +160,7 @@ def main():
 
         ct2d = ct3d[L]  # (Y,X)
         sx_mm, sy_mm = get_spacing_mm(pid, ct_img)
-        px_area_cm2 = (sx_mm * sy_mm) / 100.0  # mmÂ² -> cmÂ²
+        px_area_cm2 = (sx_mm * sy_mm) / 100.0  # mm2 -> cm2
 
         # --- Manual ---
         m_mask_p = find_manual_mask(pid)

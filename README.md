@@ -1,167 +1,170 @@
-Automated Tool to Detect Sarcopenia from CT Scans
+# Automated L3 Sarcopenia Analysis from CT Imaging
 
-This repository contains the full implementation of my MSc Artificial Intelligence dissertation project at Manchester Metropolitan University: “Automated Tool to Detect Sarcopenia from CT Scans.”
+Research prototype for automated skeletal muscle analysis at the L3 vertebral level using CT imaging, TotalSegmentator, a compact 2D U-Net, and quantitative body-composition metrics.
 
-The project develops a deep learning and rule-based pipeline for automated segmentation and quantification of skeletal muscle at the L3 vertebra level, a standard landmark for sarcopenia diagnosis. It integrates manual ground truth annotations, deep learning (U-Net), and TotalSegmentator outputs, and provides a clinician-facing Streamlit application for opportunistic screening.
+> Research use only. This project is not clinically validated, not regulatory approved, and must not be used for diagnosis or treatment decisions.
 
-🔑 Key Features
+## Overview
 
-Data Digitisation
+Sarcopenia, the loss of skeletal muscle mass and function, is associated with frailty, poor surgical outcomes, oncology prognosis, and reduced physiological reserve. Abdominal CT scans often contain enough information to estimate skeletal muscle area at the L3 vertebral level, a commonly used imaging landmark for body-composition research.
 
-Convert anonymised DICOM scans into NIfTI and extract metadata.
+This repository implements an end-to-end research workflow for:
 
-Write and validate L3 vertebra indices for reproducible processing.
+- converting CT DICOM series to NIfTI,
+- identifying the L3 slice,
+- segmenting skeletal muscle using TotalSegmentator and a 2D U-Net,
+- calculating CSA, SMRA, and optional SMI,
+- comparing automated masks with manual annotations,
+- generating evaluation figures,
+- reviewing outputs in a Streamlit app.
 
-Automated Segmentation
+## Features
 
-Deep Learning (U-Net): trained to predict L3 slice and muscle mask.
+- DICOM discovery, series grouping, CT conversion, and metadata extraction.
+- L3 slice selection from TotalSegmentator vertebra output.
+- Skeletal muscle and tissue-mask processing at L3.
+- Compact PyTorch 2D U-Net for L3 skeletal muscle segmentation.
+- CSA and SMRA calculation using CT spacing and HU filtering.
+- Optional SMI calculation where height is available.
+- Dice, agreement, Bland-Altman, histogram, and boxplot reporting.
+- Streamlit interface for patient review, overlays, CSV export, and PDF reports.
 
-TotalSegmentator: baseline multi-organ segmentation framework.
+## Architecture
 
-Rule-based application of tissue masks at L3.
+```text
+DICOM CT series
+  -> NIfTI conversion and metadata extraction
+  -> TotalSegmentator L3 vertebra segmentation
+  -> L3 slice index selection
+  -> TotalSegmentator tissue masks and/or U-Net prediction
+  -> L3 skeletal muscle mask
+  -> CSA, SMRA, optional SMI
+  -> CSV metrics, plots, overlays, Streamlit review
+```
 
-Evaluation
+## Repository Structure
 
-Compute CSA (Cross-Sectional Area) and SMRA (Skeletal Muscle Radiation Attenuation).
-
-Dice similarity between manual annotations, U-Net predictions, and TS outputs.
-
-Bland–Altman plots, correlation scatterplots, histograms, and boxplots.
-
-Clinician-facing Deployment
-
-Streamlit app to load scans, overlay segmentations, compute metrics, visualise results, and export reports.
-
-Reproducible Outputs
-
-All figures in dissertation generated automatically by make_all_plots.py.
-
-Summary statistics and metrics written to CSV and text files for auditability.
-
-📂 Repository Structure
+```text
 .
-├── digitize_dicom.py              # Convert and anonymise raw DICOMs, extract metadata
-├── write_l3_index_from_mask.py    # Extract and store L3 vertebra index
-├── run_all_segmentation.py        # Orchestrates full segmentation pipeline
-├── train_l3_unet.py               # Train U-Net model for L3 slice/muscle detection
-├── predict_l3_unet.py             # Predict L3 segmentations with trained model
-├── apply_tissue_masks_at_L3.py    # Apply TotalSegmentator tissue masks at L3 level
-├── export_l3_pairs.py             # Export paired CT/mask slices for DL training
-├── compute_all_csa_smra.py        # Compute CSA & SMRA metrics
-├── eval_dice_manual.py            # Evaluate Dice between manual & DL segmentations
-├── eval_dice_manual_vs_TS.py      # Evaluate Dice between manual & TotalSegmentator
-├── summarise_and_plot.py          # Generate basic plots and summary statistics
-├── make_all_plots.py              # Full research-grade figure generation
-├── L3 Sarcopenia Streamlit App-proV5.py  # Streamlit app for clinician-facing deployment
-├── requirements.txt               # Python dependencies
-└── README.md                      # Project documentation (this file)
-⚙️ Installation
-1. Clone the Repository
-git clone https://github.com/<your-username>/sarcopenia-detection.git
-cd sarcopenia-detection
+├── app/
+│   └── streamlit_app.py
+├── docs/
+│   ├── data_privacy.md
+│   ├── methodology.md
+│   └── model_card.md
+├── tests/
+│   └── test_metrics.py
+├── digitize_dicom.py
+├── run_all_segmentation.py
+├── write_l3_index_from_mask.py
+├── export_l3_pairs.py
+├── train_l3_unet.py
+├── predict_l3_unet.py
+├── compute_all_csa_smra.py
+├── eval_dice_manual.py
+├── eval_dice_manual_vs_TS.py
+├── make_all_plots.py
+├── requirements.txt
+└── example_config.yaml
+```
 
-2. Install Dependencies
+## Installation
+
+```bash
+git clone https://github.com/Inioluwa-Ashamu/Automated-Tool-To-Detect-Sarcopenia.git
+cd Automated-Tool-To-Detect-Sarcopenia
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-3. Environment Notes
+For GPU inference or training, install the appropriate PyTorch build for your CUDA version. TotalSegmentator may require additional setup depending on platform and model-cache configuration.
 
-Python 3.9+ recommended.
+## Configuration
 
-For GPU training/inference, install PyTorch with the correct CUDA version from pytorch.org
-.
+Most scripts can be configured using environment variables. Copy `.env.example` and adapt the paths for your local machine.
 
-TotalSegmentator requires nnU-Net v2; it is installed automatically with pip install TotalSegmentator.
+```powershell
+$env:ATTDS_DATA_ROOT="C:\path\to\anon_dig"
+$env:ATTDS_RAW_ROOT="C:\path\to\raw_dicom"
+$env:ATTDS_MANUAL_DIR="C:\path\to\manual_masks"
+$env:ATTDS_TS_EXE="TotalSegmentator"
+```
 
-🚀 Usage
-1. Data Preparation
+The scripts still support direct editing for quick dissertation-style runs, but environment variables are preferred for reproducibility and GitHub presentation.
 
-Convert and digitise raw DICOMs:
+## Usage
 
+```bash
 python digitize_dicom.py
-python write_l3_index_from_mask.py
-
-2. Segmentation
-
-Run the full segmentation pipeline:
-
 python run_all_segmentation.py
-
-
-Train a U-Net model:
-
+python write_l3_index_from_mask.py
+python export_l3_pairs.py
 python train_l3_unet.py
-
-
-Predict with a trained model:
-
 python predict_l3_unet.py
-
-3. Metric Computation
-
-Compute CSA & SMRA metrics:
-
 python compute_all_csa_smra.py
-
-
-Evaluate Dice overlap:
-
 python eval_dice_manual.py
 python eval_dice_manual_vs_TS.py
-
-4. Analysis & Plotting
-
-Generate summary plots:
-
-python summarise_and_plot.py
 python make_all_plots.py
+streamlit run app/streamlit_app.py
+```
 
-5. Deployment App
+## Example Workflow
 
-Launch Streamlit tool:
+1. Place anonymised CT DICOM folders under a dataset root.
+2. Convert each CT series into `original.nii.gz`.
+3. Run TotalSegmentator to produce `vertebrae_L3.nii.gz` and tissue masks.
+4. Write the L3 slice index into each patient's metadata.
+5. Generate L3 skeletal muscle predictions using the U-Net or use TotalSegmentator masks.
+6. Calculate CSA and SMRA at L3.
+7. Compare automated masks with manual masks where available.
+8. Review overlays and metrics in Streamlit.
 
-streamlit run "L3 Sarcopenia Streamlit App-proV5.py"
+## Outputs
 
-📊 Outputs
+- Per-patient NIfTI CT volumes and metadata.
+- L3 vertebra masks and tissue masks.
+- U-Net skeletal muscle prediction masks.
+- `comparison_all.csv` with CSA and SMRA across mask sources.
+- Dice evaluation CSVs.
+- Histograms, scatter plots, Bland-Altman plots, boxplots, and CDFs.
+- PNG overlays and optional PDF reports.
 
-comparison_all.csv → Combined manual, DL, and TS metrics per patient.
+## Evaluation
 
-eval_dice_manual_vs_DL.csv / eval_dice_manual_vs_TS.csv → Dice similarity scores.
+The project evaluates segmentation agreement using Dice similarity against manual masks where available. It also compares derived biomarkers such as CSA and SMRA across manual, U-Net, and TotalSegmentator outputs. Agreement is visualised using scatter plots and Bland-Altman plots.
 
-dl_runs/figs/ → Automatically generated plots for dissertation.
+Performance values should be reported only after running the evaluation pipeline on a clearly described dataset.
 
-Streamlit app → Interactive overlays, metric tables, cohort summaries, and report export.
+## Limitations
 
-🧪 Reproducibility
+- Research prototype only; not a medical device.
+- No clinical validation or regulatory approval.
+- Dataset size and cohort characteristics are not included in this repository.
+- No public demo CT imaging data is currently provided.
+- Current U-Net operates on selected 2D L3 slices rather than performing full 3D localisation.
+- L3 localisation currently depends on TotalSegmentator output.
+- DICOM anonymisation support is limited and should not be treated as a complete de-identification pipeline.
 
-All scripts are modular, documented, and produce deterministic outputs when run with the same data.
+## Future Work
 
-Every figure in the dissertation (histograms, scatter plots, Bland–Altman, boxplots) can be regenerated with make_all_plots.py.
+- Refactor scripts into a tested Python package.
+- Add CLI argument parsing for every workflow stage.
+- Add synthetic imaging fixtures and broader unit tests.
+- Include screenshots and demo outputs generated from non-patient synthetic data.
+- Validate on an independent dataset with documented cohort details.
+- Compare against additional segmentation baselines.
+- Improve DICOM de-identification and audit logging.
+- Containerise the app for reproducible deployment.
 
-The pipeline supports opportunistic screening — analysis can be applied to routine CT without requiring full clinical metadata (height/sex).
+## Ethical and Privacy Considerations
 
-📋 Requirements
+Medical imaging data is sensitive and must be handled under appropriate governance, consent, anonymisation, and access-control procedures. This repository should not include identifiable DICOM files or patient-derived images unless they are fully approved for public release. Outputs should be interpreted as research measurements, not clinical decisions.
 
-See requirements.txt
-:
+## Technologies
 
-numpy>=1.22
-pandas>=1.5
-matplotlib>=3.6
-SimpleITK>=2.2
-nibabel>=5.1
-pydicom>=2.4
-torch>=2.0
-streamlit>=1.26
-reportlab>=4.0
-TotalSegmentator
+Python, PyTorch, SimpleITK, pydicom, NumPy, pandas, matplotlib, nibabel, TotalSegmentator, Streamlit, reportlab.
 
-📖 Citation
+## Citation
 
-If you use this repository in academic work, please cite:
-
-Ashamu, I. (2025). Automated Tool to Detect Sarcopenia from CT Scans. MSc Artificial Intelligence Dissertation, Manchester Metropolitan University.
-
-⚠️ Disclaimer
-
-This software is provided for research purposes only.
-It is not a medical device and must not be used for clinical decision-making.
+Ashamu, I. (2025). *Automated Tool to Detect Sarcopenia from CT Scans*. MSc Artificial Intelligence Dissertation, Manchester Metropolitan University.

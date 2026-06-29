@@ -1,0 +1,20 @@
+# Example local configuration.
+# Do not commit real patient paths, identifiers, images, masks, or reports.
+
+data:
+  raw_root: "C:/path/to/raw_dicom"
+  processed_root: "C:/path/to/anon_dig"
+  manual_mask_dir: "C:/path/to/manual_masks"
+
+totalsegmentator:
+  executable: "TotalSegmentator"
+  l3_output_dirname: "segmentations2_L3"
+  tissue_output_dirname: "segmentations2_tissue"
+
+model:
+  weights: "C:/path/to/anon_dig/dl_runs/l3_unet_best.pt"
+  predictions_dir: "C:/path/to/anon_dig/dl_preds"
+
+metrics:
+  hu_min: -29
+  hu_max: 150

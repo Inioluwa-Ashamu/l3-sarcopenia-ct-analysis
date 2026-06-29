@@ -2,9 +2,9 @@ import os, re, csv
 from pathlib import Path
 import numpy as np, SimpleITK as sitk
 
-ROOT = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig")
+ROOT = Path(os.environ.get("ATTDS_DATA_ROOT", "anon_dig"))
 TS_DIRNAME = "segmentations2_tissue"
-MANUAL_DIR = Path(r"C:\Users\sophi\Downloads\ATTDS\masks")
+MANUAL_DIR = Path(os.environ.get("ATTDS_MANUAL_DIR", "masks"))
 OUT = ROOT/"dl_runs"/"eval_dice_manual_vs_TS.csv"
 
 def read_l3_index(pid):
@@ -32,7 +32,7 @@ def resample(mask, target_shape):
 def main():
     rows=[("patient_id","dice")]
     for p in sorted([x.name for x in ROOT.iterdir() if x.is_dir() and x.name.startswith("patient")]):
-        L = read_l3_index(p); 
+        L = read_l3_index(p);
         if L is None: continue
         ts_dir = ROOT/p/TS_DIRNAME
         if not ts_dir.exists(): continue

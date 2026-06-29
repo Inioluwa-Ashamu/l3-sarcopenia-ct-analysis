@@ -8,7 +8,7 @@ import SimpleITK as sitk
 import matplotlib.pyplot as plt
 
 # -------------------- CONFIG --------------------
-ROOT = r"C:\Users\sophi\Downloads\ATTDS\anon_dig"
+ROOT = os.environ.get("ATTDS_DATA_ROOT", "anon_dig")
 DIR_L3 = "segmentations2_L3"
 DIR_TISSUE = "segmentations2_tissue"
 HEIGHTS_CSV = os.path.join(ROOT, "heights.csv")   # optional; if missing, SMI is skipped
@@ -121,7 +121,7 @@ def main():
 
         for patient_id in sorted(d for d in os.listdir(ROOT) if d.lower().startswith("patient")):
             pdir = os.path.join(ROOT, patient_id)
-            if not os.path.isdir(pdir): 
+            if not os.path.isdir(pdir):
                 continue
 
             ct_path = os.path.join(pdir, "original.nii.gz")
@@ -218,7 +218,7 @@ def main():
                 except Exception as e:
                     logging.warning("%s: all-tissues overlay failed (%s)", patient_id, e)
 
-            logging.info("%s: L3=%d | SM_CSA=%.2f cmÂ²%s",
+            logging.info("%s: L3=%d | SM_CSA=%.2f cm%s",
                          patient_id, l3, a_sm, f", SMI={smi:.2f}" if smi is not None else "")
 
     logging.info("Saved cohort CSV: %s", out_csv)

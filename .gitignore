@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local configuration
+.env
+*.local
+
+# Medical imaging data and derived patient artefacts
+*.dcm
+*.nii
+*.nii.gz
+*.npy
+*.npz
+*.pt
+*.pth
+raw_data/
+anon_dig/
+dl_preds/
+dl_runs/
+segmentations*/
+masks/
+overlays*/
+
+# Reports and generated outputs
+*.pdf
+*.png
+*.csv
+*.xlsx
+*.log
+
+!.env.example
+!example_config.yaml
+!docs/**/*.md
+!tests/**/*.py

@@ -19,7 +19,7 @@ matplotlib.use("Agg")  # headless, faster, no Qt warnings
 import matplotlib.pyplot as plt
 
 # ---------------- CONFIG ----------------
-ROOT = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig")
+ROOT = Path(os.environ.get("ATTDS_DATA_ROOT", "anon_dig"))
 RUNS = ROOT / "dl_runs"
 CMP  = RUNS / "comparison_all.csv"
 DICE_DL = RUNS / "eval_dice_manual_vs_DL.csv"       # required (your DL vs manual)
@@ -150,7 +150,7 @@ def main():
     # =================== DISTRIBUTIONS ===================
     # CSA histograms
     save_hist([CSA_m, CSA_d, CSA_t], bins=20,
-              xlabel="L3 Skeletal Muscle CSA (cmÂ²)",
+              xlabel="L3 Skeletal Muscle CSA (cm2)",
               title="CSA at L3: Manual vs DL vs TS",
               fname="hist_csa_manual_dl_ts.png",
               labels=["Manual","DL","TS"])
@@ -167,7 +167,7 @@ def main():
     save_box(
         [CSA_m[mask_has_manual], CSA_d[mask_has_manual], CSA_t[mask_has_manual]],
         labels=["Manual","DL","TS"],
-        ylabel="CSA (cmÂ²)",
+        ylabel="CSA (cm2)",
         title="CSA at L3 (Manual subset)",
         fname="box_csa_manual_subset.png"
     )
@@ -184,13 +184,13 @@ def main():
     # =================== AGREEMENT / CORRELATION ===================
     # DL vs Manual CSA scatter
     save_scatter(CSA_m, CSA_d,
-                 xlabel="CSA Manual (cmÂ²)", ylabel="CSA DL (cmÂ²)",
+                 xlabel="CSA Manual (cm2)", ylabel="CSA DL (cm2)",
                  title="Agreement: CSA DL vs Manual",
                  fname="scatter_csa_dl_vs_manual.png")
 
     # TS vs Manual CSA scatter
     save_scatter(CSA_m, CSA_t,
-                 xlabel="CSA Manual (cmÂ²)", ylabel="CSA TS (cmÂ²)",
+                 xlabel="CSA Manual (cm2)", ylabel="CSA TS (cm2)",
                  title="Agreement: CSA TS vs Manual",
                  fname="scatter_csa_ts_vs_manual.png")
 
@@ -206,24 +206,24 @@ def main():
                  title="Agreement: SMRA TS vs Manual",
                  fname="scatter_smra_ts_vs_manual.png")
 
-    # Blandâ€“Altman (CSA)
+    # Bland-Altman (CSA)
     save_bland_altman(CSA_m, CSA_d,
                       label_a="CSA Manual", label_b="CSA DL",
-                      title="Blandâ€“Altman: CSA (DL - Manual) vs mean",
+                      title="Bland-Altman: CSA (DL - Manual) vs mean",
                       fname="ba_csa_dl_vs_manual.png")
     save_bland_altman(CSA_m, CSA_t,
                       label_a="CSA Manual", label_b="CSA TS",
-                      title="Blandâ€“Altman: CSA (TS - Manual) vs mean",
+                      title="Bland-Altman: CSA (TS - Manual) vs mean",
                       fname="ba_csa_ts_vs_manual.png")
 
-    # Blandâ€“Altman (SMRA)
+    # Bland-Altman (SMRA)
     save_bland_altman(SMRA_m, SMRA_d,
                       label_a="SMRA Manual", label_b="SMRA DL",
-                      title="Blandâ€“Altman: SMRA (DL - Manual) vs mean",
+                      title="Bland-Altman: SMRA (DL - Manual) vs mean",
                       fname="ba_smra_dl_vs_manual.png")
     save_bland_altman(SMRA_m, SMRA_t,
                       label_a="SMRA Manual", label_b="SMRA TS",
-                      title="Blandâ€“Altman: SMRA (TS - Manual) vs mean",
+                      title="Bland-Altman: SMRA (TS - Manual) vs mean",
                       fname="ba_smra_ts_vs_manual.png")
 
     # =================== DICE PLOTS ===================
@@ -243,16 +243,16 @@ def main():
         save_box([dice_ts_arr], labels=["TS vs Manual"], ylabel="Dice",
                  title="Dice overlap at L3 (TS)", fname="box_dice_ts_manual.png", ylim=(0,1.0))
 
-    # Dice vs CSA (manual) scatter â€” does overlap worsen on extremes?
+    # Dice vs CSA (manual) scatter - does overlap worsen on extremes?
     save_scatter([dice_map.get(pid, math.nan) for pid in pids], CSA_m,
-                 xlabel="Dice (DL vs Manual)", ylabel="CSA Manual (cmÂ²)",
+                 xlabel="Dice (DL vs Manual)", ylabel="CSA Manual (cm2)",
                  title="Dice vs Manual CSA", fname="scatter_dice_vs_csa_manual.png",
                  draw_identity=False, fit_line=True)
 
     # Dice vs |CSA diff| scatter
     abs_diff_dl = np.abs(CSA_d - CSA_m)
     save_scatter([dice_map.get(pid, math.nan) for pid in pids], abs_diff_dl,
-                 xlabel="Dice (DL vs Manual)", ylabel="|CSA DL - Manual| (cmÂ²)",
+                 xlabel="Dice (DL vs Manual)", ylabel="|CSA DL - Manual| (cm2)",
                  title="Dice vs Absolute CSA Error (DL)", fname="scatter_dice_vs_absdiff_dl.png",
                  draw_identity=False, fit_line=True)
 
@@ -296,9 +296,9 @@ def main():
         plt.title(title)
         plt.savefig(FIGDIR/fname, bbox_inches="tight"); plt.close()
 
-    save_cdf(CSA_m, "Manual", "CSA (cmÂ²)", "CDF: CSA Manual", "cdf_csa_manual.png")
-    save_cdf(CSA_d, "DL",     "CSA (cmÂ²)", "CDF: CSA DL",     "cdf_csa_dl.png")
-    save_cdf(CSA_t, "TS",     "CSA (cmÂ²)", "CDF: CSA TS",     "cdf_csa_ts.png")
+    save_cdf(CSA_m, "Manual", "CSA (cm2)", "CDF: CSA Manual", "cdf_csa_manual.png")
+    save_cdf(CSA_d, "DL",     "CSA (cm2)", "CDF: CSA DL",     "cdf_csa_dl.png")
+    save_cdf(CSA_t, "TS",     "CSA (cm2)", "CDF: CSA TS",     "cdf_csa_ts.png")
 
     # =================== PRINT SUMMARY ===================
     md, q1d, q3d, nd = med_iqr(dice_arr)

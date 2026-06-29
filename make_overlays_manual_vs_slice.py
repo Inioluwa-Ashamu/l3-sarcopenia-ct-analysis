@@ -5,9 +5,9 @@ import SimpleITK as sitk
 import matplotlib.pyplot as plt
 
 # ---------- CONFIG ----------
-L3_SLICES_DIR = r"E:\ATTDS\annotations\nii_for_snap"          # folder with patientXXX_L3slice.nii(.gz)
-MANUAL_MASKS_DIR = r"E:\ATTDS\masks"    # folder with patientXXX_*.nii(.gz)
-OUT_DIR = r"E:\ATTDS\overlays_manual"          # output PNGs
+L3_SLICES_DIR = os.environ.get("ATTDS_L3_SLICES_DIR", "annotations/nii_for_snap")
+MANUAL_MASKS_DIR = os.environ.get("ATTDS_MANUAL_DIR", "masks")
+OUT_DIR = os.environ.get("ATTDS_OVERLAY_DIR", "overlays_manual")
 
 # Filename patterns (glob). Keep broad; we match patient IDs by regex.
 SLICE_PATTERNS = ["*.nii", "*.nii.gz", "*L3slice*.nii*", "*_L3slice.nii*"]

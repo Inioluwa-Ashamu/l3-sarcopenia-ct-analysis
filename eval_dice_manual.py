@@ -8,9 +8,9 @@ import numpy as np
 import SimpleITK as sitk
 
 # -------------- CONFIG --------------
-ROOT       = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig")        # dataset root with patientXXX/
+ROOT       = Path(os.environ.get("ATTDS_DATA_ROOT", "anon_dig"))        # dataset root with patientXXX/
 PRED_DIR   = ROOT / "dl_preds"                  # DL predicted masks (full 3D with only L3 slice nonzero)
-MANUAL_DIR = Path(r"C:\Users\sophi\Downloads\ATTDS\masks")     # manual mask folder
+MANUAL_DIR = Path(os.environ.get("ATTDS_MANUAL_DIR", "masks"))     # manual mask folder
 OUT_CSV    = ROOT / "dl_runs" / "eval_dice_manual_vs_DL.csv"
 # ------------------------------------
 

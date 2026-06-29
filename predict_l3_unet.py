@@ -4,9 +4,9 @@ from pathlib import Path
 from train_l3_unet import UNet
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-ROOT = Path(r"C:\Users\sophi\Downloads\ATTDS\anon_dig")
-WEIGHTS = ROOT/"dl_runs"/"l3_unet_best.pt"
-OUTDIR  = ROOT/"dl_preds"; OUTDIR.mkdir(exist_ok=True, parents=True)
+ROOT = Path(os.environ.get("ATTDS_DATA_ROOT", "anon_dig"))
+WEIGHTS = Path(os.environ.get("ATTDS_MODEL_WEIGHTS", str(ROOT/"dl_runs"/"l3_unet_best.pt")))
+OUTDIR  = Path(os.environ.get("ATTDS_DL_DIR", str(ROOT/"dl_preds"))); OUTDIR.mkdir(exist_ok=True, parents=True)
 
 def hu_norm(arr):
     arr = np.clip(arr, -200, 300)

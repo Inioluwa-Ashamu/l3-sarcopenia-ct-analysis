@@ -1,11 +1,11 @@
 import os, re, glob, json, numpy as np, SimpleITK as sitk
 from pathlib import Path
 
-ROOT = r"C:\Users\sophi\Downloads\ATTDS\anon_dig"   # <- change if needed
+ROOT = os.environ.get("ATTDS_DATA_ROOT", "anon_dig")
 OUT  = Path(ROOT) / "dl_data" / "train_npz"
 OUT.mkdir(parents=True, exist_ok=True)
 
-def read_nii(p): 
+def read_nii(p):
     img = sitk.ReadImage(str(p)); arr = sitk.GetArrayFromImage(img)  # z,y,x
     return arr, img
 
