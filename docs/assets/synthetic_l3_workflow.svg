@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 420" role="img" aria-labelledby="title desc">
+  <title id="title">Synthetic L3 slice workflow</title>
+  <desc id="desc">Three synthetic CT-style panels showing an L3 slice, skeletal muscle overlay, and manual versus automated contours.</desc>
+  <rect width="1180" height="420" fill="#ffffff"/>
+  <text x="590" y="42" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#0f172a">Synthetic L3 Review Example</text>
+  <text x="590" y="70" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#64748b">Illustrative demo only. This image is hand-generated and contains no patient imaging.</text>
+  <defs>
+    <radialGradient id="ct" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#d1d5db"/>
+      <stop offset="38%" stop-color="#9ca3af"/>
+      <stop offset="68%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </radialGradient>
+    <filter id="softNoise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="9"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend mode="multiply" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g transform="translate(58 104)">
+      <rect width="310" height="268" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="155" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Synthetic L3 CT Slice</text>
+      <g transform="translate(65 48)" filter="url(#softNoise)">
+        <rect width="180" height="180" fill="#020617"/>
+        <ellipse cx="90" cy="94" rx="76" ry="65" fill="url(#ct)"/>
+        <ellipse cx="90" cy="75" rx="22" ry="18" fill="#e5e7eb"/>
+        <ellipse cx="58" cy="105" rx="26" ry="38" fill="#9ca3af"/>
+        <ellipse cx="122" cy="105" rx="26" ry="38" fill="#9ca3af"/>
+        <ellipse cx="73" cy="62" rx="13" ry="24" fill="#a3a3a3"/>
+        <ellipse cx="107" cy="62" rx="13" ry="24" fill="#a3a3a3"/>
+      </g>
+      <text x="155" y="252" text-anchor="middle" font-size="12" fill="#64748b">Windowed CT-style cross-section</text>
+    </g>
+    <g transform="translate(435 104)">
+      <rect width="310" height="268" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="155" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Muscle Mask Overlay</text>
+      <g transform="translate(65 48)">
+        <rect width="180" height="180" fill="#020617"/>
+        <ellipse cx="90" cy="94" rx="76" ry="65" fill="url(#ct)"/>
+        <ellipse cx="90" cy="75" rx="22" ry="18" fill="#e5e7eb"/>
+        <ellipse cx="58" cy="105" rx="26" ry="38" fill="#9ca3af" opacity="0.8"/>
+        <ellipse cx="122" cy="105" rx="26" ry="38" fill="#9ca3af" opacity="0.8"/>
+        <ellipse cx="73" cy="62" rx="13" ry="24" fill="#a3a3a3" opacity="0.8"/>
+        <ellipse cx="107" cy="62" rx="13" ry="24" fill="#a3a3a3" opacity="0.8"/>
+        <ellipse cx="58" cy="105" rx="27" ry="39" fill="none" stroke="#22c55e" stroke-width="4"/>
+        <ellipse cx="122" cy="105" rx="27" ry="39" fill="none" stroke="#22c55e" stroke-width="4"/>
+        <ellipse cx="73" cy="62" rx="14" ry="25" fill="none" stroke="#22c55e" stroke-width="4"/>
+        <ellipse cx="107" cy="62" rx="14" ry="25" fill="none" stroke="#22c55e" stroke-width="4"/>
+      </g>
+      <rect x="92" y="237" width="18" height="4" fill="#22c55e"/>
+      <text x="116" y="243" font-size="12" fill="#334155">skeletal muscle mask</text>
+    </g>
+    <g transform="translate(812 104)">
+      <rect width="310" height="268" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="155" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Manual vs Automated</text>
+      <g transform="translate(65 48)">
+        <rect width="180" height="180" fill="#020617"/>
+        <ellipse cx="90" cy="94" rx="76" ry="65" fill="url(#ct)"/>
+        <ellipse cx="90" cy="75" rx="22" ry="18" fill="#e5e7eb"/>
+        <ellipse cx="58" cy="105" rx="27" ry="39" fill="none" stroke="#22c55e" stroke-width="3"/>
+        <ellipse cx="122" cy="105" rx="27" ry="39" fill="none" stroke="#22c55e" stroke-width="3"/>
+        <ellipse cx="73" cy="62" rx="14" ry="25" fill="none" stroke="#22c55e" stroke-width="3"/>
+        <ellipse cx="107" cy="62" rx="14" ry="25" fill="none" stroke="#22c55e" stroke-width="3"/>
+        <ellipse cx="61" cy="105" rx="27" ry="37" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="7 5"/>
+        <ellipse cx="125" cy="105" rx="27" ry="37" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="7 5"/>
+        <ellipse cx="55" cy="109" rx="30" ry="39" fill="none" stroke="#f97316" stroke-width="3" stroke-dasharray="3 5"/>
+        <ellipse cx="119" cy="109" rx="30" ry="39" fill="none" stroke="#f97316" stroke-width="3" stroke-dasharray="3 5"/>
+      </g>
+      <g font-size="12" fill="#334155">
+        <rect x="58" y="237" width="18" height="4" fill="#22c55e"/><text x="82" y="243">manual</text>
+        <rect x="139" y="237" width="18" height="4" fill="#38bdf8"/><text x="163" y="243">U-Net</text>
+        <rect x="214" y="237" width="18" height="4" fill="#f97316"/><text x="238" y="243">TS</text>
+      </g>
+    </g>
+  </g>
+</svg>

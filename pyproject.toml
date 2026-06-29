@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Research prototype for L3 sarcopenia analysis from CT imaging."
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "Research use only" }
+license = { text = "MIT" }
 authors = [
   { name = "Inioluwa Ashamu" }
 ]

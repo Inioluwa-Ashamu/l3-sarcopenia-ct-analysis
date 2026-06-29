@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 420" role="img" aria-labelledby="title desc">
+  <title id="title">Synthetic evaluation summary</title>
+  <desc id="desc">Synthetic CSA agreement scatter plot and Dice boxplot representing the repository reporting outputs.</desc>
+  <rect width="1180" height="420" fill="#ffffff"/>
+  <text x="590" y="42" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#0f172a">Example Reporting Outputs</text>
+  <text x="590" y="70" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#64748b">Synthetic metrics only. Do not interpret these values as project performance.</text>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g transform="translate(78 110)">
+      <rect width="470" height="250" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="235" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">CSA Agreement</text>
+      <line x1="70" y1="205" x2="420" y2="205" stroke="#94a3b8"/>
+      <line x1="70" y1="205" x2="70" y2="54" stroke="#94a3b8"/>
+      <line x1="70" y1="205" x2="420" y2="54" stroke="#334155" stroke-dasharray="6 6"/>
+      <g fill="#2563eb">
+        <circle cx="122" cy="180" r="6"/><circle cx="162" cy="158" r="6"/><circle cx="198" cy="146" r="6"/>
+        <circle cx="242" cy="126" r="6"/><circle cx="286" cy="110" r="6"/><circle cx="331" cy="91" r="6"/><circle cx="381" cy="73" r="6"/>
+      </g>
+      <g fill="#ea580c">
+        <circle cx="128" cy="186" r="6"/><circle cx="168" cy="170" r="6"/><circle cx="205" cy="151" r="6"/>
+        <circle cx="248" cy="139" r="6"/><circle cx="292" cy="118" r="6"/><circle cx="337" cy="108" r="6"/><circle cx="386" cy="87" r="6"/>
+      </g>
+      <text x="245" y="236" text-anchor="middle" font-size="12" fill="#475569">Reference CSA (cm2)</text>
+      <text x="-130" y="26" transform="rotate(-90)" text-anchor="middle" font-size="12" fill="#475569">Automated CSA (cm2)</text>
+      <rect x="312" y="32" width="12" height="12" fill="#2563eb"/><text x="330" y="43" font-size="12" fill="#334155">U-Net</text>
+      <rect x="370" y="32" width="12" height="12" fill="#ea580c"/><text x="388" y="43" font-size="12" fill="#334155">TS</text>
+    </g>
+    <g transform="translate(632 110)">
+      <rect width="470" height="250" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="235" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Segmentation Overlap</text>
+      <line x1="76" y1="205" x2="410" y2="205" stroke="#94a3b8"/>
+      <line x1="76" y1="205" x2="76" y2="54" stroke="#94a3b8"/>
+      <g stroke="#e2e8f0">
+        <line x1="76" y1="165" x2="410" y2="165"/><line x1="76" y1="125" x2="410" y2="125"/><line x1="76" y1="85" x2="410" y2="85"/>
+      </g>
+      <g>
+        <line x1="180" y1="105" x2="180" y2="66" stroke="#1e3a8a" stroke-width="2"/>
+        <rect x="142" y="82" width="76" height="52" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+        <line x1="142" y1="105" x2="218" y2="105" stroke="#111827" stroke-width="3"/>
+        <line x1="180" y1="134" x2="180" y2="154" stroke="#1e3a8a" stroke-width="2"/>
+      </g>
+      <g>
+        <line x1="310" y1="128" x2="310" y2="88" stroke="#7c2d12" stroke-width="2"/>
+        <rect x="272" y="110" width="76" height="55" fill="#ffedd5" stroke="#7c2d12" stroke-width="2"/>
+        <line x1="272" y1="134" x2="348" y2="134" stroke="#111827" stroke-width="3"/>
+        <line x1="310" y1="165" x2="310" y2="182" stroke="#7c2d12" stroke-width="2"/>
+      </g>
+      <text x="180" y="230" text-anchor="middle" font-size="13" fill="#334155">U-Net</text>
+      <text x="310" y="230" text-anchor="middle" font-size="13" fill="#334155">TotalSegmentator</text>
+      <text x="54" y="86" text-anchor="end" font-size="11" fill="#64748b">0.90</text>
+      <text x="54" y="126" text-anchor="end" font-size="11" fill="#64748b">0.80</text>
+      <text x="54" y="166" text-anchor="end" font-size="11" fill="#64748b">0.70</text>
+      <text x="-130" y="26" transform="rotate(-90)" text-anchor="middle" font-size="12" fill="#475569">Dice similarity</text>
+    </g>
+  </g>
+</svg>

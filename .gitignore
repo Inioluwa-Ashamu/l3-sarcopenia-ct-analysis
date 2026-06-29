@@ -36,5 +36,10 @@ overlays*/
 
 !.env.example
 !example_config.yaml
+!examples/
+!examples/**/*.csv
+!docs/assets/
+!docs/assets/**/*.svg
+!docs/assets/**/*.png
 !docs/**/*.md
 !tests/**/*.py
